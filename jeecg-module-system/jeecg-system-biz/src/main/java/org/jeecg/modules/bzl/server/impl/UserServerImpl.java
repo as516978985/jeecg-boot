@@ -2,7 +2,7 @@ package org.jeecg.modules.bzl.server.impl;
 
 import org.jeecg.modules.bzl.constant.Path;
 import org.jeecg.modules.bzl.mapper.MyUserMapper;
-import org.jeecg.modules.bzl.doman.User;
+import org.jeecg.modules.bzl.entity.User;
 import org.jeecg.modules.bzl.server.UserServer;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

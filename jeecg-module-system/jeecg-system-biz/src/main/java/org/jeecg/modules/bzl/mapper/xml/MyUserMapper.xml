@@ -2,17 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="org.jeecg.modules.bzl.mapper.MyUserMapper">
     <insert id="register">
-        insert into user (username, password, name, department, img) value (#{username},#{password},#{name},#{department},#{img})
+        insert into mem_user (username, password, name, department, img) value (#{username},#{password},#{name},#{department},#{img})
     </insert>
-    <select id="selectUser" resultType="org.jeecg.modules.bzl.doman.User">
+    <select id="selectUser" resultType="org.jeecg.modules.bzl.entity.User">
         select *
-        from user
+        from mem_user
         where username = #{username}
           and password = #{password}
     </select>
-    <select id="selectUserByName" resultType="org.jeecg.modules.bzl.doman.User">
+    <select id="selectUserByName" resultType="org.jeecg.modules.bzl.entity.User">
         select *
-        from user
+        from mem_user
         where username = #{username}
     </select>
 </mapper>

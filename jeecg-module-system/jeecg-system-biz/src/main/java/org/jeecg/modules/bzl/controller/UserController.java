@@ -1,8 +1,12 @@
 package org.jeecg.modules.bzl.controller;
 
 import org.jeecg.modules.bzl.constant.Code;
-import org.jeecg.modules.bzl.doman.Result;
-import org.jeecg.modules.bzl.doman.User;
+import org.jeecg.modules.bzl.entity.Card;
+import org.jeecg.modules.bzl.entity.Result;
+import org.jeecg.modules.bzl.entity.Schedule;
+import org.jeecg.modules.bzl.entity.User;
+import org.jeecg.modules.bzl.server.CardServer;
+import org.jeecg.modules.bzl.server.ScheduleServer;
 import org.jeecg.modules.bzl.server.UserServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * @description: 用户操作控制器
@@ -23,6 +28,41 @@ public class UserController {
 
     @Autowired
     private UserServer userServer;
+
+    @Autowired
+    private CardServer cardServer;
+
+    @Autowired
+    private ScheduleServer scheduleServer;
+
+    /**
+     * 获取任务卡片（对应前端左上角内容）
+     *
+     * @return
+     */
+    @GetMapping("/getTaskCard")
+    public Result SelectAllTaskCard() {
+        List<Card> cards = cardServer.selectAll();
+        if (cards != null)
+            return new Result(Code.GET_OK, cards, "查询成功");
+        else
+            return new Result(Code.GET_OK, null, "查询失败");
+    }
+
+    /**
+     * 获取日程（对应前端有下角）
+     *
+     * @return
+     */
+    @GetMapping("/getEventCard")
+    public Result SelectAllEventCard() {
+        List<Schedule> scheduleList = scheduleServer.selectAll();
+        if (scheduleList != null)
+            return new Result(Code.GET_OK, scheduleList, "查询成功");
+        else
+            return new Result(Code.GET_OK, null, "查询失败");
+    }
+
 
     /**
      * 用户登录
@@ -85,4 +125,6 @@ public class UserController {
         System.out.println(status);
         return status;
     }
+
+
 }

@@ -1,4 +1,4 @@
-package org.jeecg.modules.bzl.doman;
+package org.jeecg.modules.bzl.entity;
 
 /**
  * @description:
@@ -6,7 +6,7 @@ package org.jeecg.modules.bzl.doman;
  * @date: 2022年09月14日 16:13
  */
 public class User {
-    private int id;
+    private Integer id;
     private String username;
     private String password;
     private String name;

@@ -1,20 +1,14 @@
 package org.jeecg.modules.bzl.mapper;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.jeecg.modules.bzl.doman.Schedule;
-
-import java.util.List;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.jeecg.modules.bzl.entity.Schedule;
 
 /**
- * @description:
- * @author: bzl
- * @date: 2022年10月09日 9:43
+ * @Description: schedule
+ * @Author: jeecg-boot
+ * @Date:   2022-10-11
+ * @Version: V1.0
  */
-
-@Mapper
-public interface ScheduleMapper {
-    List<Schedule> selectAll();
-
-    List<Schedule> selectById(int userId);
+public interface ScheduleMapper extends BaseMapper<Schedule> {
 
 }

@@ -1,6 +1,6 @@
 package org.jeecg.modules.bzl.server;
 
-import org.jeecg.modules.bzl.doman.User;
+import org.jeecg.modules.bzl.entity.User;
 import org.springframework.web.multipart.MultipartFile;
 
 /**

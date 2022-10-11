@@ -1,4 +1,4 @@
-package org.jeecg.modules.bzl.doman;
+package org.jeecg.modules.bzl.entity;
 
 public class Result {
     private Object data;
