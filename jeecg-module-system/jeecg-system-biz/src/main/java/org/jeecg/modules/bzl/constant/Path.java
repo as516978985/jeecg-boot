@@ -7,6 +7,7 @@ package org.jeecg.modules.bzl.constant;
  */
 public class Path {
 
-    public static final String PictureSavePath = "C:\\Users\\YFB\\Desktop\\index-project\\src\\main\\resources\\static\\img\\";
+    public static final String PictureSavePath = "C:\\Users\\YFB\\Desktop\\jeecg-boot\\jeecg-module-system\\jeecg-system-biz\\src\\main\\resources\\static\\img";
+//    public static final String PictureSavePath = "C:\\Users\\YFB\\Desktop\\index-project\\src\\main\\resources\\static\\img\\";
 //    public static final String PictureSavePath = "E:\\Code\\index_project\\src\\main\\resources\\static\\img\\";
 }

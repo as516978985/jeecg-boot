@@ -1,10 +1,13 @@
 package org.jeecg.modules.bzl.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+
 /**
  * @description:
  * @author: bzl
  * @date: 2022年09月14日 16:13
  */
+@TableName("mem_user")
 public class User {
     private Integer id;
     private String username;

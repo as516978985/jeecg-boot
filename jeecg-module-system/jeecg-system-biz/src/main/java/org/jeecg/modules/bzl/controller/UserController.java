@@ -1,11 +1,9 @@
 package org.jeecg.modules.bzl.controller;
 
 import org.jeecg.modules.bzl.constant.Code;
-import org.jeecg.modules.bzl.entity.Card;
-import org.jeecg.modules.bzl.entity.Result;
-import org.jeecg.modules.bzl.entity.Schedule;
-import org.jeecg.modules.bzl.entity.User;
+import org.jeecg.modules.bzl.entity.*;
 import org.jeecg.modules.bzl.server.CardServer;
+import org.jeecg.modules.bzl.server.EventServer;
 import org.jeecg.modules.bzl.server.ScheduleServer;
 import org.jeecg.modules.bzl.server.UserServer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +33,9 @@ public class UserController {
     @Autowired
     private ScheduleServer scheduleServer;
 
+    @Autowired
+    private EventServer eventServer;
+
     /**
      * 获取任务卡片（对应前端左上角内容）
      *
@@ -50,11 +51,56 @@ public class UserController {
     }
 
     /**
+     * 获取事件卡片信息
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/getEventCard/{id}")
+    public Result SelectEventCardById(@PathVariable int id) {
+        List<Event> events = eventServer.selectEventById(id);
+        if (events != null)
+            return new Result(Code.GET_OK, events, "查询成功");
+        else
+            return new Result(Code.GET_OK, null, "查询失败");
+    }
+
+    @GetMapping("/changeEventCardAttention/{id}")
+    public Result changeEventCardAttention(@PathVariable int id) {
+        System.out.println("接口测试");
+        boolean flag = true;
+        if (flag)
+            return new Result(Code.GET_OK, null, "查询成功");
+        else
+            return new Result(Code.GET_OK, null, "查询失败");
+    }
+
+
+    /**
+     * 获取用户信息（对应前端有下角）
+     *
+     * @return
+     */
+    @GetMapping("/getUserInfo/{id}")
+    public Result SelectUserById(@PathVariable int id) {
+        User user = userServer.userInfo(id);
+        if (user != null) {
+            UserInfo userInfo = new UserInfo();
+            userInfo.setId(user.getId());
+            userInfo.setName(user.getName());
+            userInfo.setDepartment(user.getDepartment());
+            userInfo.setImg(user.getImg());
+            return new Result(Code.GET_OK, userInfo, "查询成功");
+        } else
+            return new Result(Code.GET_OK, null, "查询失败");
+    }
+
+    /**
      * 获取日程（对应前端有下角）
      *
      * @return
      */
-    @GetMapping("/getEventCard")
+    @GetMapping("/getScheduleCard")
     public Result SelectAllEventCard() {
         List<Schedule> scheduleList = scheduleServer.selectAll();
         if (scheduleList != null)

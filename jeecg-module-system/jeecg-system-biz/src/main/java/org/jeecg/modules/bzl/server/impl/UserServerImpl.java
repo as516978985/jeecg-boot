@@ -20,12 +20,13 @@ import java.net.URL;
 @Service
 public class UserServerImpl implements UserServer {
 
-//    @Autowired(required = false)
+    //    @Autowired(required = false)
     @Resource
     private MyUserMapper myUserMapper;
 
     /**
      * 用户登录
+     *
      * @param user
      * @return
      */
@@ -38,12 +39,13 @@ public class UserServerImpl implements UserServer {
 
     /**
      * 用户注册
+     *
      * @param user
      * @return
      */
     @Override
     public Boolean userRegister(User user) {
-        System.out.println("接收到的user"+user);
+        System.out.println("接收到的user" + user);
         //查用户是否存在
         if (myUserMapper.selectUserByName(user) != null) {
             return false;
@@ -53,6 +55,7 @@ public class UserServerImpl implements UserServer {
 
     /**
      * 保存前端传来的文件
+     *
      * @param file
      * @return
      */
@@ -70,6 +73,7 @@ public class UserServerImpl implements UserServer {
 
     /**
      * 删除图片文件
+     *
      * @param name
      * @return
      */
@@ -82,5 +86,16 @@ public class UserServerImpl implements UserServer {
         String relPath = Path.PictureSavePath + name.replaceAll("\"", "");
         File relFile = new File(relPath);
         return file.delete() && relFile.delete();
+    }
+
+    /**
+     * 根据id查找用户
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public User userInfo(int id) {
+        return myUserMapper.selectById(id);
     }
 }

@@ -16,4 +16,6 @@ public interface UserServer {
     String saveAvatar(MultipartFile file);
 
     boolean deleteProfile(String name);
+
+    User userInfo(int id);
 }
