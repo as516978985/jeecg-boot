@@ -1,7 +1,11 @@
 package org.jeecg.modules.bzl.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 import org.jeecg.modules.bzl.entity.Schedule;
+
+import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * @Description: schedule
@@ -11,4 +15,5 @@ import org.jeecg.modules.bzl.entity.Schedule;
  */
 public interface ScheduleMapper extends BaseMapper<Schedule> {
 
+    List<Schedule> selectScheduleByDate(@Param("userId") int id,@Param("currentDate")  Timestamp date);
 }

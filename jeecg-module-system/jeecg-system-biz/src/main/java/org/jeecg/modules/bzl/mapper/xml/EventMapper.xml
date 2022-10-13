@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="org.jeecg.modules.bzl.mapper.EventMapper">
+    <update id="changeAttention">
+        update mem_event
+        set attention_flag=#{flag}
+        where id = #{id}
+    </update>
 
     <select id="selectEventByUserId" resultType="org.jeecg.modules.bzl.entity.Event">
-        select * from mem_event where user_id=#{id}
+        select *
+        from mem_event
+        where user_id = #{id}
     </select>
 </mapper>

@@ -23,4 +23,17 @@ public class EventServerImp implements EventServer {
     public List<Event> selectEventById(int id) {
         return eventMapper.selectEventByUserId(id);
     }
+
+    @Override
+    public List<Event> changeAttention(int id) {
+        Event event = eventMapper.selectById(id);
+        if (event == null) {
+            return null;
+        } else if ("1".equals(event.getAttentionFlag())) {
+            eventMapper.changeAttention("0", id);
+        } else {
+            eventMapper.changeAttention("1", id);
+        }
+        return selectEventById(event.getUserId());
+    }
 }

@@ -13,4 +13,6 @@ import java.util.List;
 public interface EventServer {
 
     List<Event> selectEventById(int id);
+
+    List<Event> changeAttention(int id);
 }

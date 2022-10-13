@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -67,10 +68,10 @@ public class UserController {
 
     @GetMapping("/changeEventCardAttention/{id}")
     public Result changeEventCardAttention(@PathVariable int id) {
-        System.out.println("接口测试");
-        boolean flag = true;
-        if (flag)
-            return new Result(Code.GET_OK, null, "查询成功");
+        List<Event> events = eventServer.changeAttention(id);
+
+        if (events != null)
+            return new Result(Code.GET_OK, events, "查询成功");
         else
             return new Result(Code.GET_OK, null, "查询失败");
     }
@@ -100,15 +101,31 @@ public class UserController {
      *
      * @return
      */
-    @GetMapping("/getScheduleCard")
-    public Result SelectAllEventCard() {
-        List<Schedule> scheduleList = scheduleServer.selectAll();
-        if (scheduleList != null)
-            return new Result(Code.GET_OK, scheduleList, "查询成功");
-        else
-            return new Result(Code.GET_OK, null, "查询失败");
+    @PostMapping("/getScheduleCard")
+    public Result SelectAllEventCard(int userId, String date) {
+        System.out.println("userId = " + userId);
+        System.out.println("date = " + date);
+        System.out.println("Timestamp.valueOf(date) = " + Timestamp.valueOf(date));
+//        scheduleServer.selectScheduleByDate(userId, Timestamp.valueOf(date));
+        return new Result(Code.GET_OK, null, "查看date");
+//        List<Schedule> scheduleList = scheduleServer.selectAll();
+//        int userId = 1;
+//        List<Schedule> scheduleList = scheduleServer.selectScheduleByDate(userId, date);
+//        if (scheduleList != null)
+//            return new Result(Code.GET_OK, scheduleList, "查询成功");
+//        else
+//            return new Result(Code.GET_OK, null, "查询失败");
     }
 
+    @GetMapping("/changeScheduleFlag/{id}")
+    public Result changeScheduleFlag(@PathVariable int id) {
+        List<Schedule> scheduleList = scheduleServer.changeScheduleFlag(id);
+
+        if (scheduleList != null) {
+            return new Result(Code.GET_OK, scheduleList, "查询成功");
+        } else
+            return new Result(Code.GET_OK, null, "查询失败");
+    }
 
     /**
      * 用户登录

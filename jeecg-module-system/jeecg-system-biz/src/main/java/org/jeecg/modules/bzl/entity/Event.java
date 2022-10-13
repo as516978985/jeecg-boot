@@ -29,7 +29,7 @@ public class Event {
     @TableField(value = "create_time")
     private Date createTime;
     @TableField(value = "user_id")
-    private String userId;
+    private int userId;
     @TableField(value = "attention_flag")
     private String attentionFlag;
 
