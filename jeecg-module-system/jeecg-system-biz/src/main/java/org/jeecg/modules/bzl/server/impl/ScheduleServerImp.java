@@ -27,12 +27,13 @@ public class ScheduleServerImp implements ScheduleServer {
         return scheduleMapper.selectList(null);
     }
 
-    public List<Schedule> selectScheduleByDate(int id, Timestamp date) {
+    @Override
+    public List<Schedule> selectScheduleByDate(int id, String date) {
         return scheduleMapper.selectScheduleByDate(id, date);
     }
 
     @Override
-    public List<Schedule> changeScheduleFlag(int id) {
+    public List<Schedule> changeScheduleFlag(int id, int userId, String date) {
         Schedule schedule = scheduleMapper.selectById(id);
         //时间格规则式化
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -49,6 +50,8 @@ public class ScheduleServerImp implements ScheduleServer {
             schedule.setModifyTime(currentTime);
             scheduleMapper.updateById(schedule);
         }
-        return selectAll();
+        return selectScheduleByDate(userId, date);
     }
+
+
 }

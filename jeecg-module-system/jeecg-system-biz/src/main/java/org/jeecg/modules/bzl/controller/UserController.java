@@ -12,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -54,7 +53,7 @@ public class UserController {
     /**
      * 获取事件卡片信息
      *
-     * @param id
+     * @param id 用户id
      * @return
      */
     @GetMapping("/getEventCard/{id}")
@@ -66,10 +65,14 @@ public class UserController {
             return new Result(Code.GET_OK, null, "查询失败");
     }
 
-    @GetMapping("/changeEventCardAttention/{id}")
-    public Result changeEventCardAttention(@PathVariable int id) {
+    /**
+     * 改变关注任务的关注状态
+     * @param id 用户id
+     * @return
+     */
+    @PostMapping("/changeEventCardAttention")
+    public Result changeEventCardAttention(int id) {
         List<Event> events = eventServer.changeAttention(id);
-
         if (events != null)
             return new Result(Code.GET_OK, events, "查询成功");
         else
@@ -79,7 +82,7 @@ public class UserController {
 
     /**
      * 获取用户信息（对应前端有下角）
-     *
+     * @param id 用户id
      * @return
      */
     @GetMapping("/getUserInfo/{id}")
@@ -98,34 +101,51 @@ public class UserController {
 
     /**
      * 获取日程（对应前端有下角）
-     *
+     * @param userId 用户id
+     * @param date 日期
      * @return
      */
     @PostMapping("/getScheduleCard")
     public Result SelectAllEventCard(int userId, String date) {
-        System.out.println("userId = " + userId);
-        System.out.println("date = " + date);
-        System.out.println("Timestamp.valueOf(date) = " + Timestamp.valueOf(date));
-//        scheduleServer.selectScheduleByDate(userId, Timestamp.valueOf(date));
-        return new Result(Code.GET_OK, null, "查看date");
-//        List<Schedule> scheduleList = scheduleServer.selectAll();
-//        int userId = 1;
-//        List<Schedule> scheduleList = scheduleServer.selectScheduleByDate(userId, date);
-//        if (scheduleList != null)
-//            return new Result(Code.GET_OK, scheduleList, "查询成功");
-//        else
-//            return new Result(Code.GET_OK, null, "查询失败");
+        List<Schedule> scheduleList = scheduleServer.selectScheduleByDate(userId, date);
+        if (scheduleList != null)
+            return new Result(Code.GET_OK, scheduleList, "查询成功");
+        else
+            return new Result(Code.GET_OK, null, "查询失败");
     }
 
-    @GetMapping("/changeScheduleFlag/{id}")
-    public Result changeScheduleFlag(@PathVariable int id) {
-        List<Schedule> scheduleList = scheduleServer.changeScheduleFlag(id);
+    /**
+     * 改变日程
+     * @param scheduleId 被改变的日程id
+     * @param userId 用户id
+     * @param date 时间
+     * @return
+     */
+    @PostMapping("/changeScheduleFlag")
+    public Result changeScheduleFlag(int scheduleId ,int userId,String date) {
 
+        List<Schedule> scheduleList = scheduleServer.changeScheduleFlag(scheduleId,userId,date);
+        System.out.println("scheduleList = " + scheduleList);
         if (scheduleList != null) {
             return new Result(Code.GET_OK, scheduleList, "查询成功");
         } else
             return new Result(Code.GET_OK, null, "查询失败");
     }
+
+
+    @PostMapping("/getNote")
+    public Result getNote(int userId,String date) {
+
+//        if (scheduleList != null) {
+//            return new Result(Code.GET_OK, scheduleList, "查询成功");
+//        } else
+            return new Result(Code.GET_OK, null, "查询失败");
+    }
+
+
+
+
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~以下用不到了（之前学习的时候写的）~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     /**
      * 用户登录

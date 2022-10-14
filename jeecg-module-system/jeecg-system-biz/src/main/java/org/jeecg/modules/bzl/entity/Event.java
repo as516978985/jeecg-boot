@@ -14,7 +14,7 @@ import java.sql.Date;
 @Data
 @TableName(value = "mem_event")
 public class Event {
-    private Integer id;
+    private int id;
     private String title;
     private String content;
     @TableField(value = "start_time")
