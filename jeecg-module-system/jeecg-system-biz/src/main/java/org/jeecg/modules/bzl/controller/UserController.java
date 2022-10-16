@@ -2,10 +2,7 @@ package org.jeecg.modules.bzl.controller;
 
 import org.jeecg.modules.bzl.constant.Code;
 import org.jeecg.modules.bzl.entity.*;
-import org.jeecg.modules.bzl.server.CardServer;
-import org.jeecg.modules.bzl.server.EventServer;
-import org.jeecg.modules.bzl.server.ScheduleServer;
-import org.jeecg.modules.bzl.server.UserServer;
+import org.jeecg.modules.bzl.server.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,6 +32,9 @@ public class UserController {
 
     @Autowired
     private EventServer eventServer;
+
+    @Autowired
+    private NoteServer noteServer;
 
     /**
      * 获取任务卡片（对应前端左上角内容）
@@ -67,6 +67,7 @@ public class UserController {
 
     /**
      * 改变关注任务的关注状态
+     *
      * @param id 用户id
      * @return
      */
@@ -82,6 +83,7 @@ public class UserController {
 
     /**
      * 获取用户信息（对应前端有下角）
+     *
      * @param id 用户id
      * @return
      */
@@ -101,8 +103,9 @@ public class UserController {
 
     /**
      * 获取日程（对应前端有下角）
+     *
      * @param userId 用户id
-     * @param date 日期
+     * @param date   日期
      * @return
      */
     @PostMapping("/getScheduleCard")
@@ -116,15 +119,16 @@ public class UserController {
 
     /**
      * 改变日程
+     *
      * @param scheduleId 被改变的日程id
-     * @param userId 用户id
-     * @param date 时间
+     * @param userId     用户id
+     * @param date       时间
      * @return
      */
     @PostMapping("/changeScheduleFlag")
-    public Result changeScheduleFlag(int scheduleId ,int userId,String date) {
+    public Result changeScheduleFlag(int scheduleId, int userId, String date) {
 
-        List<Schedule> scheduleList = scheduleServer.changeScheduleFlag(scheduleId,userId,date);
+        List<Schedule> scheduleList = scheduleServer.changeScheduleFlag(scheduleId, userId, date);
         System.out.println("scheduleList = " + scheduleList);
         if (scheduleList != null) {
             return new Result(Code.GET_OK, scheduleList, "查询成功");
@@ -132,17 +136,39 @@ public class UserController {
             return new Result(Code.GET_OK, null, "查询失败");
     }
 
-
+    /**
+     * 获取笔记数据
+     *
+     * @param userId 用户id
+     * @param date   日期
+     * @return
+     */
     @PostMapping("/getNote")
-    public Result getNote(int userId,String date) {
+    public Result getNote(int userId, String date) {
+        List<Note> noteList = noteServer.getNode(userId, date);
 
-//        if (scheduleList != null) {
-//            return new Result(Code.GET_OK, scheduleList, "查询成功");
-//        } else
+        if (noteList != null) {
+            return new Result(Code.GET_OK, noteList, "查询成功");
+        } else
             return new Result(Code.GET_OK, null, "查询失败");
     }
 
+    /**
+     * 按照日期添加笔记
+     * @param content
+     * @param date
+     * @param userId
+     * @return
+     */
+    @PostMapping("/addNote")
+    public Result increaseNote(String content, String date, int userId) {
+        List<Note> noteList = noteServer.addNode(content, date, userId);
 
+        if (noteList != null) {
+            return new Result(Code.GET_OK, noteList, "查询成功");
+        } else
+            return new Result(Code.GET_OK, null, "查询失败");
+    }
 
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~以下用不到了（之前学习的时候写的）~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

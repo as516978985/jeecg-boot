@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="org.jeecg.modules.bzl.mapper.NoteMapper">
+    <insert id="addNote">
+        insert into mem_note (create_time, content, check_flag, user_id)
+        values (#{currentDate}, #{content}, 0, #{userId})
+    </insert>
+    <select id="selectNoteByDate" resultType="org.jeecg.modules.bzl.entity.Note">
+        select *
+        from mem_note
+        where user_id = #{userId}
+          and create_time = #{currentDate}
+    </select>
 </mapper>

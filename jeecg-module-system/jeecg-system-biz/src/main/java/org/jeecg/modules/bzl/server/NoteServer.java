@@ -1,5 +1,9 @@
 package org.jeecg.modules.bzl.server;
 
+import org.jeecg.modules.bzl.entity.Note;
+
+import java.util.List;
+
 /**
  * @description:
  * @author: bzl
@@ -8,4 +12,7 @@ package org.jeecg.modules.bzl.server;
 public interface NoteServer {
 
 
+    List<Note> getNode(int userId, String date);
+
+    List<Note> addNode(String content, String date,int userId);
 }
